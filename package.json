@@ -7,8 +7,22 @@
   "scripts": {
     "test": "node dist/test/test.js"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuchen/event-rpc.git"
+  },
+  "keywords": [
+    "javascript",
+    "rpc",
+    "WebSocket",
+    "SocketIO"
+  ],
+  "author": "Fu Chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fuchen/event-rpc/issues"
+  },
+  "homepage": "https://github.com/fuchen/event-rpc#readme",
   "devDependencies": {
     "@types/node": "^7.0.12"
   }
