@@ -1,0 +1,16 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+      "interface-name": [true, "always-prefix"],
+      "semicolon": [true, "never"],
+      "quotemark": [true, "single", "avoid-escape"],
+      "forin": false,
+      "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+      "ordered-imports": [false],
+      "max-classes-per-file": [true, 5],
+      "only-arrow-functions": [false],
+      "object-literal-sort-keys": false,
+      "arrow-parens": false,
+      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+    }
+}
