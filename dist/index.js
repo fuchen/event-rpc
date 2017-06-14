@@ -75,14 +75,14 @@ class ServiceRegistry {
         }
         return services.get(namespace);
     }
-    addService(channel, namespace, handler) {
+    addService(channel, namespace, handler, replace) {
         let services = this._registry.get(channel);
         if (!services) {
             services = new Map();
             services.set(namespace, handler);
             this._registry.set(channel, services);
         }
-        else if (services.has(namespace)) {
+        else if (services.has(namespace) && !replace) {
             throw Error(`Service ${namespace} was already registered.`);
         }
         else {
@@ -123,11 +123,12 @@ function initRpcChannel(channel) {
     });
 }
 exports.initRpcChannel = initRpcChannel;
-function registerService(channel, namespace, handler) {
+function registerService(channel, namespace, handler, options) {
+    options = options || {};
     if (!handler.__exported_methods) {
         throw TypeError('Service handler exported nothing.');
     }
-    registry.addService(channel, namespace, handler);
+    registry.addService(channel, namespace, handler, options.replace);
 }
 exports.registerService = registerService;
 //# sourceMappingURL=index.js.map

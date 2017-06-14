@@ -99,13 +99,13 @@ class ServiceRegistry {
     return services.get(namespace)
   }
 
-  public addService(channel: IRpcChannel, namespace: string, handler: any): void {
+  public addService(channel: IRpcChannel, namespace: string, handler: any, replace?: boolean): void {
     let services = this._registry.get(channel)
     if (!services) {
       services = new Map<string, any>()
       services.set(namespace, handler)
       this._registry.set(channel, services)
-    } else if (services.has(namespace)) {
+    } else if (services.has(namespace) && !replace) {
       throw Error(`Service ${namespace} was already registered.`)
     } else {
       services.set(namespace, handler)
@@ -153,10 +153,14 @@ export function initRpcChannel(channel: IRpcChannel): void {
 export function registerService<LocalInterface>(
   channel: IRpcChannel,
   namespace: string,
-  handler: LocalInterface
+  handler: LocalInterface,
+  options?: {
+    replace?: boolean
+  }
 ): void {
+  options = options || {}
   if (!(handler as any).__exported_methods) {
     throw TypeError('Service handler exported nothing.')
   }
-  registry.addService(channel, namespace, handler)
+  registry.addService(channel, namespace, handler, options.replace)
 }

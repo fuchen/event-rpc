@@ -7,4 +7,6 @@ export interface IRpcChannel {
 export declare function exported(target: any, method: string | Function): void;
 export declare function getRemoteService<RemoteInterface>(channel: IRpcChannel, namespace: string): RemoteInterface;
 export declare function initRpcChannel(channel: IRpcChannel): void;
-export declare function registerService<LocalInterface>(channel: IRpcChannel, namespace: string, handler: LocalInterface): void;
+export declare function registerService<LocalInterface>(channel: IRpcChannel, namespace: string, handler: LocalInterface, options?: {
+    replace?: boolean;
+}): void;
