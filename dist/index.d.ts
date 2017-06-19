@@ -10,3 +10,4 @@ export declare function initRpcChannel(channel: IRpcChannel): void;
 export declare function registerService<LocalInterface>(channel: IRpcChannel, namespace: string, handler: LocalInterface, options?: {
     replace?: boolean;
 }): void;
+export declare function getLocalService<LocalInterface>(channel: any, namespace: any): LocalInterface;

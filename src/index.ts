@@ -164,3 +164,7 @@ export function registerService<LocalInterface>(
   }
   registry.addService(channel, namespace, handler, options.replace)
 }
+
+export function getLocalService<LocalInterface>(channel, namespace) {
+  return registry.getService(channel, namespace) as LocalInterface
+}

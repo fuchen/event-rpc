@@ -131,4 +131,8 @@ function registerService(channel, namespace, handler, options) {
     registry.addService(channel, namespace, handler, options.replace);
 }
 exports.registerService = registerService;
+function getLocalService(channel, namespace) {
+    return registry.getService(channel, namespace);
+}
+exports.getLocalService = getLocalService;
 //# sourceMappingURL=index.js.map
