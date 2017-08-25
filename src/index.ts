@@ -23,7 +23,7 @@ class RemoteProxy {
     this.__rpc_namespace = namespace
 
     channel.on('__rpc_return__' + namespace, (reqid, error, result) => {
-      let callbacks = this.__rpc_pendings[reqid]
+      const callbacks = this.__rpc_pendings[reqid]
       if (!callbacks) {
         return
       }
@@ -31,7 +31,7 @@ class RemoteProxy {
       delete this.__rpc_pendings[reqid]
 
       if (error) {
-        callbacks.reject(error)
+        callbacks.reject(new Error(error))
       } else {
         callbacks.resolve(result)
       }
@@ -55,9 +55,7 @@ class RemoteProxy {
     }
 
     func.noReturn = (...params) => {
-      return new Promise((resolve, reject) => {
-        this.__rpc_channel.emit('__rpc_call__', 0, this.__rpc_namespace, method, ...params)
-      })
+      this.__rpc_channel.emit('__rpc_call__', 0, this.__rpc_namespace, method, ...params)
     }
 
     this.__rpc_knownMethods.set(method, func)
