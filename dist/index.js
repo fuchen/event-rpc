@@ -1,5 +1,5 @@
-// tslint:disable:variable-name
 "use strict";
+// tslint:disable:variable-name
 Object.defineProperty(exports, "__esModule", { value: true });
 class RemoteProxy {
     constructor(channel, namespace) {
@@ -8,13 +8,13 @@ class RemoteProxy {
         this.__rpc_channel = channel;
         this.__rpc_namespace = namespace;
         channel.on('__rpc_return__' + namespace, (reqid, error, result) => {
-            let callbacks = this.__rpc_pendings[reqid];
+            const callbacks = this.__rpc_pendings[reqid];
             if (!callbacks) {
                 return;
             }
             delete this.__rpc_pendings[reqid];
             if (error) {
-                callbacks.reject(error);
+                callbacks.reject(new Error(error));
             }
             else {
                 callbacks.resolve(result);
@@ -35,9 +35,7 @@ class RemoteProxy {
             });
         };
         func.noReturn = (...params) => {
-            return new Promise((resolve, reject) => {
-                this.__rpc_channel.emit('__rpc_call__', 0, this.__rpc_namespace, method, ...params);
-            });
+            this.__rpc_channel.emit('__rpc_call__', 0, this.__rpc_namespace, method, ...params);
         };
         this.__rpc_knownMethods.set(method, func);
         return func;
@@ -115,7 +113,7 @@ function initRpcChannel(channel) {
             return;
         }
         if (ret && typeof ret.then === 'function') {
-            ret.then(value => channel.emit('__rpc_return__' + ns, reqid, null, value), error => channel.emit('__rpc_return__' + ns, reqid, error, null));
+            ret.then(value => channel.emit('__rpc_return__' + ns, reqid, null, value), error => channel.emit('__rpc_return__' + ns, reqid, error.toString(), null));
         }
         else {
             channel.emit('__rpc_return__' + ns, reqid, null, ret);

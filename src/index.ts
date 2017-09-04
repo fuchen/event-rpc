@@ -140,7 +140,7 @@ export function initRpcChannel(channel: IRpcChannel): void {
     if (ret && typeof ret.then === 'function') {
       ret.then(
         value => channel.emit('__rpc_return__' + ns, reqid, null, value),
-        error => channel.emit('__rpc_return__' + ns, reqid, error, null)
+        error => channel.emit('__rpc_return__' + ns, reqid, error.toString(), null)
       )
     } else {
       channel.emit('__rpc_return__' + ns, reqid, null, ret)
